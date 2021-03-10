@@ -2,7 +2,7 @@
 resource "google_compute_backend_service" "http-lb" {
   name        = "${var.environment_name}-http-lb"
   port_name   = "http"
-  protocol    = "HTTP"
+  protocol    = "HTTPS"
   timeout_sec = 900
   enable_cdn  = false
 
@@ -22,6 +22,11 @@ resource "google_compute_instance_group" "http-lb" {
   zone = element(var.availability_zones, count.index)
 
   count = length(var.availability_zones)
+
+  named_port {
+    name = "http"
+    port = "443"
+  }
 }
 
 resource "google_compute_global_address" "http-lb" {
