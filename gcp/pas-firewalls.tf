@@ -71,3 +71,19 @@ resource "google_compute_firewall" "http-lb" {
 
   target_tags = ["${var.environment_name}-http-lb"]
 }
+
+resource "google_compute_firewall" "http-lb-health-check" {
+  name    = "${var.environment_name}-http-lb-health-check"
+  network = google_compute_network.network.name
+
+  direction = "INGRESS"
+
+  allow {
+    protocol = "tcp"
+    ports    = ["8080"]
+  }
+
+  source_ranges = ["130.211.0.0/22", "35.191.0.0/16"]
+
+  target_tags = [google_compute_http_health_check.http-lb.name]
+}
