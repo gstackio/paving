@@ -2,7 +2,7 @@
 resource "google_compute_backend_service" "http-lb" {
   name        = "${var.environment_name}-http-lb"
   port_name   = "http"
-  protocol    = "HTTPS"
+  protocol    = "HTTP"
   timeout_sec = 900
   enable_cdn  = false
 
@@ -25,7 +25,7 @@ resource "google_compute_instance_group" "http-lb" {
 
   named_port {
     name = "http"
-    port = "443"
+    port = "80"
   }
 }
 
