@@ -10,6 +10,9 @@ resource "google_compute_subnetwork" "management" {
   ip_cidr_range = local.management_subnet_cidr
   network       = google_compute_network.network.self_link
   region        = var.region
+  depends_on    = [
+    google_compute_network.network,
+  ]
 }
 
 resource "google_compute_subnetwork" "services" {
@@ -17,6 +20,9 @@ resource "google_compute_subnetwork" "services" {
   ip_cidr_range = local.services_subnet_cidr
   network       = google_compute_network.network.self_link
   region        = var.region
+  depends_on    = [
+    google_compute_network.network,
+  ]
 }
 
 //NOTE: here because it is a requirement on the NAT
@@ -26,4 +32,7 @@ resource "google_compute_subnetwork" "pks" {
   ip_cidr_range = local.pks_subnet_cidr
   network       = google_compute_network.network.self_link
   region        = var.region
+  depends_on    = [
+    google_compute_network.network,
+  ]
 }
