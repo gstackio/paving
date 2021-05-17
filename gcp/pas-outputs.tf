@@ -16,6 +16,8 @@ locals {
     tcp_target_pool_name = google_compute_target_pool.tcp-lb.name
     web_target_pool_name = google_compute_target_pool.websocket-lb.name
 
+    tcp_ports = join(",", local.tcp_ports)
+
     sys_dns_domain = replace(replace(google_dns_record_set.wildcard-sys.name, "/\\.$/", ""), "*.", "")
     apps_dns_domain = replace(replace(google_dns_record_set.wildcard-apps.name, "/\\.$/", ""), "*.", "")
     doppler_dns = replace(google_dns_record_set.doppler-sys.name, "/\\.$/", "")
