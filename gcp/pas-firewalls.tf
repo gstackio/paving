@@ -58,6 +58,20 @@ resource "google_compute_firewall" "websocket-lb" {
   target_tags = ["${var.environment_name}-websocket-lb"]
 }
 
+resource "google_compute_firewall" "ssh-lb" {
+  name    = "${var.environment_name}-ssh-lb-firewall"
+  network = google_compute_network.network.name
+
+  direction = "INGRESS"
+
+  allow {
+    protocol = "tcp"
+    ports    = ["2222"]
+  }
+
+  target_tags = ["${var.environment_name}-ssh-lb"]
+}
+
 resource "google_compute_firewall" "http-lb" {
   name    = "${var.environment_name}-http-lb-firewall"
   network = google_compute_network.network.self_link
